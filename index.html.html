@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ajudaeu — seu melhor funcionário</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:      #1a1206;       /* marrom café profundo */
+  --paper:    #f0ead6;       /* off-white papel */
+  --paper2:   #e6dfc8;
+  --neon:     #c8f020;       /* verde neon / amarelo enxofre */
+  --neon2:    #a8d400;
+  --rust:     #c84b1a;       /* destaque ferrugem */
+  --chalk:    #f5f0e0;
+  --border:   #1a1206;
+  --serif:    'Playfair Display', Georgia, serif;
+  --mono:     'Space Mono', 'Courier New', monospace;
+  --stroke:   2px solid var(--border);
+  --stroke-t: 1px solid rgba(26,18,6,0.25);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 15px;
+  line-height: 1.7;
+  overflow-x: hidden;
+  /* textura de papel */
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+/* ─── GRID LINES de fundo ─── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(26,18,6,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,18,6,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+* { position: relative; z-index: 1; }
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 0 2rem;
+  height: 58px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--ink);
+  border-bottom: var(--stroke);
+}
+.nav-logo {
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: 1.2rem;
+  color: var(--paper);
+  text-decoration: none;
+  display: flex; align-items: center; gap: 10px;
+}
+.logo-mark {
+  background: var(--neon);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 7px;
+  border-radius: 3px;
+  letter-spacing: 0.05em;
+}
+.nav-tagline {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: rgba(240,234,214,0.5);
+  letter-spacing: 0.1em;
+  border-left: 1px solid rgba(240,234,214,0.2);
+  padding-left: 10px;
+  margin-left: 4px;
+}
+.nav-cta {
+  background: var(--neon);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 0.75rem;
+  padding: 0.5rem 1.2rem;
+  border: 2px solid var(--ink);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+  box-shadow: 3px 3px 0 var(--paper);
+}
+.nav-cta:hover { box-shadow: 5px 5px 0 var(--paper); transform: translate(-1px,-1px); }
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  padding: 100px 2rem 4rem;
+  max-width: 1200px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 4rem;
+  align-items: center;
+}
+@media(max-width:900px){ .hero { grid-template-columns: 1fr; } }
+
+.hero-left {}
+
+.hero-stamp {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: var(--stroke);
+  padding: 0.35rem 0.9rem;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  background: var(--neon);
+}
+.hero-stamp::before { content: '◈'; font-size: 0.8rem; }
+
+h1 {
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: clamp(2.8rem, 7vw, 5.8rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  margin-bottom: 2rem;
+}
+h1 em { font-style: italic; color: var(--rust); }
+h1 u { text-decoration: none; border-bottom: 5px solid var(--neon); }
+
+.hero-sub {
+  font-family: var(--mono);
+  font-size: 0.88rem;
+  color: rgba(26,18,6,0.7);
+  max-width: 520px;
+  margin-bottom: 2.5rem;
+  line-height: 1.8;
+  border-left: 4px solid var(--neon);
+  padding-left: 1.2rem;
+}
+
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+
+.btn-primary {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 0.82rem;
+  padding: 0.9rem 2rem;
+  border: 2px solid var(--ink);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: box-shadow 0.15s, transform 0.15s;
+  box-shadow: 4px 4px 0 var(--neon);
+}
+.btn-primary:hover { box-shadow: 7px 7px 0 var(--neon); transform: translate(-2px,-2px); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 0.82rem;
+  padding: 0.9rem 2rem;
+  border: 2px solid var(--ink);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: box-shadow 0.15s, transform 0.15s;
+  box-shadow: 4px 4px 0 rgba(26,18,6,0.25);
+}
+.btn-ghost:hover { box-shadow: 7px 7px 0 rgba(26,18,6,0.4); transform: translate(-2px,-2px); }
+
+.price-flag {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--neon);
+  border: var(--stroke);
+  padding: 0.6rem 1.2rem;
+  font-family: var(--mono);
+}
+.price-flag strong { font-size: 1.1rem; font-weight: 700; }
+.price-flag span { font-size: 0.72rem; opacity: 0.7; }
+
+/* HERO — card direito */
+.hero-card {
+  background: var(--ink);
+  color: var(--paper);
+  border: var(--stroke);
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero-card::before {
+  content: 'DADOS // 2025';
+  position: absolute; top: 1rem; right: 1rem;
+  font-family: var(--mono); font-size: 0.6rem; opacity: 0.3; letter-spacing: 0.1em;
+}
+.card-title {
+  font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--neon); margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 8px;
+}
+.card-title::before { content: ''; width: 20px; height: 1px; background: var(--neon); }
+
+.metric { margin-bottom: 1.5rem; }
+.metric-label { font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.5; margin-bottom: 0.3rem; }
+.metric-value { font-family: var(--serif); font-size: 2.2rem; font-weight: 900; line-height: 1; color: var(--neon); }
+.metric-bar {
+  margin-top: 0.5rem; height: 6px;
+  background: rgba(240,234,214,0.1);
+  position: relative; overflow: hidden;
+}
+.metric-bar-fill { height: 100%; background: var(--neon); }
+.metric-sub { font-size: 0.65rem; opacity: 0.5; margin-top: 0.3rem; }
+
+.hero-card-divider { border: none; border-top: 1px solid rgba(240,234,214,0.15); margin: 1.5rem 0; }
+
+.mascot-area {
+  display: flex; align-items: center; gap: 12px; margin-top: 1.5rem;
+  padding: 1rem; border: 1px solid rgba(240,234,214,0.15);
+}
+.mascot-svg { flex-shrink: 0; }
+.mascot-text { font-size: 0.7rem; opacity: 0.6; line-height: 1.5; }
+.mascot-text strong { color: var(--neon); opacity: 1; display: block; font-size: 0.75rem; margin-bottom: 2px; }
+
+/* ─── SEÇÕES ─── */
+section { padding: 6rem 2rem; }
+.section-inner { max-width: 1200px; margin: 0 auto; }
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--rust);
+  margin-bottom: 0.8rem;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-label::before { content: ''; width: 24px; height: 1px; background: var(--rust); }
+
+h2 {
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.2rem;
+}
+.lead {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: rgba(26,18,6,0.65);
+  max-width: 540px;
+  margin-bottom: 3rem;
+  line-height: 1.8;
+}
+
+/* ─── DOR ─── */
+.pain-section { background: var(--ink); color: var(--paper); }
+.pain-section .section-label { color: var(--neon); }
+.pain-section .section-label::before { background: var(--neon); }
+.pain-section .lead { color: rgba(240,234,214,0.6); }
+
+.pain-quote {
+  border: 1px solid rgba(240,234,214,0.2);
+  padding: 1.5rem;
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-style: italic;
+  line-height: 1.5;
+  margin-bottom: 3rem;
+  max-width: 680px;
+  position: relative;
+}
+.pain-quote::before {
+  content: '"';
+  font-size: 5rem; line-height: 1; color: var(--neon); opacity: 0.3;
+  position: absolute; top: -1rem; left: 1rem;
+  font-family: var(--serif);
+}
+
+.pain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap: 1px; background: rgba(240,234,214,0.15); border: 1px solid rgba(240,234,214,0.15); }
+.pain-card { background: var(--ink); padding: 2rem; }
+.pain-card-num {
+  font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.15em;
+  color: var(--neon); margin-bottom: 1rem;
+}
+.pain-card h3 { font-family: var(--serif); font-size: 1.15rem; margin-bottom: 0.7rem; font-weight: 700; }
+.pain-card p { font-size: 0.8rem; color: rgba(240,234,214,0.55); line-height: 1.7; }
+
+/* ─── DIFERENCIAL ─── */
+.diff-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+@media(max-width:750px){ .diff-layout { grid-template-columns: 1fr; } }
+
+.diff-list { display: flex; flex-direction: column; }
+.diff-item {
+  display: grid; grid-template-columns: 40px 1fr;
+  gap: 1rem; align-items: start;
+  border-bottom: var(--stroke-t);
+  padding: 1.5rem 0;
+}
+.diff-num { font-family: var(--mono); font-size: 0.65rem; color: var(--rust); padding-top: 4px; letter-spacing: 0.05em; }
+.diff-item strong { font-family: var(--serif); font-size: 1.05rem; display: block; margin-bottom: 0.4rem; }
+.diff-item span { font-size: 0.8rem; color: rgba(26,18,6,0.6); line-height: 1.7; }
+
+.diagram-box {
+  border: var(--stroke);
+  padding: 0;
+  background: var(--chalk);
+  overflow: hidden;
+}
+.diagram-header {
+  background: var(--ink); color: var(--paper);
+  padding: 0.7rem 1.2rem;
+  font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.diagram-header-dots { display: flex; gap: 5px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; }
+.dot-r { background: var(--rust); } .dot-y { background: var(--neon); } .dot-g { background: #50c878; }
+.diagram-body { padding: 1.5rem; }
+.diagram-row { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; }
+.diagram-row:last-child { margin-bottom: 0; }
+.diagram-key { font-family: var(--mono); font-size: 0.68rem; width: 110px; flex-shrink: 0; color: rgba(26,18,6,0.7); }
+.diagram-track { flex: 1; height: 20px; background: rgba(26,18,6,0.08); border: 1px solid rgba(26,18,6,0.15); position: relative; }
+.diagram-fill { height: 100%; display: flex; align-items: center; padding-left: 6px; }
+.diagram-fill span { font-family: var(--mono); font-size: 0.6rem; font-weight: 700; color: var(--ink); white-space: nowrap; }
+
+/* ─── SERVIÇOS ─── */
+.services-section { background: var(--paper2); }
+.services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 0; border: var(--stroke); }
+.service-card {
+  padding: 2rem;
+  border-right: var(--stroke);
+  border-bottom: var(--stroke);
+  background: var(--chalk);
+  transition: background 0.2s;
+}
+.service-card:hover { background: var(--neon); }
+.service-card:nth-child(3n) { border-right: none; }
+.service-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.2rem; }
+.service-code { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; color: var(--rust); }
+.service-price { font-family: var(--mono); font-weight: 700; font-size: 1rem; }
+.service-price small { font-size: 0.62rem; font-weight: 400; opacity: 0.6; display: block; text-align: right; }
+.service-card h3 { font-family: var(--serif); font-size: 1.2rem; font-weight: 700; margin-bottom: 0.6rem; }
+.service-card p { font-size: 0.78rem; color: rgba(26,18,6,0.65); margin-bottom: 1.2rem; line-height: 1.7; }
+.service-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.stag { font-family: var(--mono); font-size: 0.6rem; border: 1px solid rgba(26,18,6,0.3); padding: 2px 7px; letter-spacing: 0.05em; }
+.service-card.featured { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.service-card.featured:hover { background: var(--neon); color: var(--ink); }
+.service-card.featured .service-card p { color: rgba(240,234,214,0.6); }
+.service-card.featured .stag { border-color: rgba(240,234,214,0.3); color: var(--paper); }
+.service-card.featured:hover p { color: rgba(26,18,6,0.65); }
+.service-card.featured:hover .stag { border-color: rgba(26,18,6,0.3); color: var(--ink); }
+
+/* ─── QUEM É ─── */
+.who-section { background: var(--ink); color: var(--paper); }
+.who-section .section-label { color: var(--neon); }
+.who-section .section-label::before { background: var(--neon); }
+.who-section .lead { color: rgba(240,234,214,0.6); }
+
+.who-layout { display: grid; grid-template-columns: 400px 1fr; gap: 4rem; align-items: start; }
+@media(max-width:850px){ .who-layout { grid-template-columns: 1fr; } }
+
+.who-photo-frame {
+  border: 2px solid rgba(240,234,214,0.2);
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  background: #2a2010;
+}
+.who-photo-frame img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: top center;
+  display: block;
+  filter: contrast(1.05) saturate(0.9);
+}
+.who-photo-frame::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(10,8,2,0.85));
+  pointer-events: none;
+}
+.who-photo-overlay {
+  position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
+  padding: 1.5rem;
+}
+.who-name {
+  font-family: var(--serif); font-weight: 900; font-size: 1.5rem; color: var(--paper);
+  margin-bottom: 0.25rem;
+}
+.who-role { font-family: var(--mono); font-size: 0.68rem; color: var(--neon); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; }
+.who-traits { display: flex; flex-direction: column; gap: 0.3rem; }
+.who-trait { font-family: var(--mono); font-size: 0.7rem; color: rgba(240,234,214,0.75); display: flex; align-items: center; gap: 8px; }
+.who-trait::before { content: '//'; color: var(--neon); font-weight: 700; }
+
+.who-bio { font-size: 0.85rem; color: rgba(240,234,214,0.7); line-height: 1.85; margin-bottom: 2rem; }
+.who-bio strong { color: var(--neon); font-weight: 700; }
+
+.skills-label { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(240,234,214,0.4); margin-bottom: 1rem; }
+.skills-cloud { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.skill-tag {
+  font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.03em;
+  border: 1px solid rgba(240,234,214,0.2); padding: 0.3rem 0.7rem;
+  color: rgba(240,234,214,0.7);
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.skill-tag:hover { border-color: var(--neon); color: var(--neon); background: rgba(200,240,32,0.05); }
+
+/* ─── PARA QUEM ─── */
+.for-who-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 0; border: var(--stroke); }
+.for-who-card {
+  padding: 1.8rem 1.4rem;
+  border-right: var(--stroke);
+  border-bottom: var(--stroke);
+  background: var(--chalk);
+  text-align: left;
+  transition: background 0.15s;
+}
+.for-who-card:hover { background: var(--neon); }
+.for-who-icon { font-size: 1.5rem; margin-bottom: 0.7rem; display: block; }
+.for-who-title { font-family: var(--serif); font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
+.for-who-desc { font-size: 0.72rem; color: rgba(26,18,6,0.6); line-height: 1.6; font-family: var(--mono); }
+
+/* ─── COMO FUNCIONA ─── */
+.how-section { background: var(--paper2); }
+.how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 0; border: var(--stroke); counter-reset: steps; }
+.how-step {
+  counter-increment: steps;
+  padding: 2.2rem 1.8rem;
+  border-right: var(--stroke);
+  border-bottom: var(--stroke);
+  background: var(--chalk);
+}
+.how-step::before {
+  content: counter(steps, decimal-leading-zero);
+  font-family: var(--mono); font-size: 2rem; font-weight: 700;
+  color: var(--neon); display: block; margin-bottom: 1rem;
+  -webkit-text-stroke: 1px var(--ink);
+}
+.how-step h3 { font-family: var(--serif); font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
+.how-step p { font-size: 0.78rem; color: rgba(26,18,6,0.6); line-height: 1.7; }
+
+/* ─── CTA ─── */
+.cta-section {
+  background: var(--neon);
+  border-top: var(--stroke);
+  border-bottom: var(--stroke);
+  padding: 6rem 2rem;
+  text-align: center;
+}
+.cta-section h2 { font-size: clamp(2.2rem, 5vw, 4rem); max-width: 700px; margin: 0 auto 1rem; }
+.cta-section p { font-family: var(--mono); font-size: 0.85rem; max-width: 480px; margin: 0 auto 2.5rem; opacity: 0.75; }
+.cta-note { font-family: var(--mono); font-size: 0.7rem; opacity: 0.6; margin-top: 1rem; letter-spacing: 0.05em; }
+
+/* ─── FORM ─── */
+.form-section { background: var(--ink); color: var(--paper); }
+.form-section .section-label { color: var(--neon); }
+.form-section .section-label::before { background: var(--neon); }
+.form-wrap { max-width: 600px; border: 1px solid rgba(240,234,214,0.2); padding: 2.5rem; background: rgba(240,234,214,0.03); }
+.form-wrap > p { font-size: 0.82rem; color: rgba(240,234,214,0.55); margin-bottom: 2rem; }
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.2rem; }
+label { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(240,234,214,0.45); }
+input, select, textarea {
+  background: rgba(240,234,214,0.05);
+  border: 1px solid rgba(240,234,214,0.2);
+  border-radius: 0;
+  padding: 0.8rem 1rem;
+  font-family: var(--mono); font-size: 0.85rem;
+  color: var(--paper); outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+  -webkit-appearance: none;
+}
+input:focus, select:focus, textarea:focus { border-color: var(--neon); }
+select option { background: #1a1206; }
+textarea { resize: vertical; min-height: 90px; }
+.form-submit {
+  width: 100%;
+  background: var(--neon); color: var(--ink);
+  font-family: var(--mono); font-weight: 700; font-size: 0.88rem;
+  padding: 1rem; border: 2px solid var(--neon);
+  cursor: pointer; letter-spacing: 0.08em; text-transform: uppercase;
+  transition: box-shadow 0.15s, transform 0.15s;
+  box-shadow: 4px 4px 0 rgba(240,234,214,0.3);
+}
+.form-submit:hover { box-shadow: 7px 7px 0 rgba(240,234,214,0.5); transform: translate(-2px,-2px); }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--ink); color: var(--paper);
+  border-top: var(--stroke);
+  padding: 1.5rem 2rem;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 1rem;
+  font-family: var(--mono); font-size: 0.68rem; opacity: 0.6;
+}
+footer a { color: var(--neon); text-decoration: none; }
+
+/* ─── REVEAL ─── */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.hero-stamp, .hero h1, .hero-sub, .hero-actions, .price-flag { animation: fadeUp 0.5s ease both; }
+.hero h1 { animation-delay: 0.1s; }
+.hero-sub { animation-delay: 0.2s; }
+.hero-actions { animation-delay: 0.3s; }
+.price-flag { animation-delay: 0.4s; }
+
+@media(max-width:600px){ nav { padding: 0 1rem; } .nav-tagline { display: none; } section { padding: 4rem 1.2rem; } }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <span class="logo-mark">AE</span>
+    ajudaeu
+    <span class="nav-tagline">// seu melhor funcionário</span>
+  </a>
+  <a href="#contato" class="nav-cta">Começar →</a>
+</nav>
+
+<!-- HERO -->
+<div style="max-width:1200px;margin:0 auto;">
+<section class="hero" style="padding-top:100px;">
+  <div class="hero-left">
+    <div class="hero-stamp">ajudaeu · seu melhor funcionário</div>
+    <h1>Agências cobram caro.<br>E <em>não entendem</em><br>a sua <u>realidade</u>.</h1>
+    <p class="hero-sub">
+      Você toca o negócio sozinho — cuida do financeiro, do atendimento e ainda tenta fazer marketing. Eu sei como é difícil. Por isso criei o ajudaeu: estratégia real, sem enrolação, sem preço de grande empresa.
+    </p>
+    <div class="hero-actions">
+      <a href="#contato" class="btn-primary">Quero crescer meu negócio →</a>
+      <a href="#servicos" class="btn-ghost">Ver serviços e preços</a>
+    </div>
+    <div class="price-flag">
+      <strong>A partir de R$150</strong>
+      <span>· serviços feitos pra você</span>
+    </div>
+  </div>
+
+  <div class="hero-card reveal">
+    <div class="card-title">Resultados comprovados</div>
+
+    <div class="metric">
+      <div class="metric-label">// ROI em campanhas</div>
+      <div class="metric-value">8×</div>
+      <div class="metric-bar"><div class="metric-bar-fill" style="width:80%"></div></div>
+      <div class="metric-sub">retorno sobre investimento</div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">// Receita recuperada</div>
+      <div class="metric-value">R$200K</div>
+      <div class="metric-bar"><div class="metric-bar-fill" style="width:95%"></div></div>
+      <div class="metric-sub">com automação de reativação</div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">// Clientes recorrentes gerados</div>
+      <div class="metric-value">9.000+</div>
+      <div class="metric-bar"><div class="metric-bar-fill" style="width:70%"></div></div>
+      <div class="metric-sub">base eventuais → recorrentes</div>
+    </div>
+
+    <hr class="hero-card-divider">
+
+    <div class="mascot-area">
+      <!-- Mascote: compasso de engenharia -->
+      <svg class="mascot-svg" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="24" cy="10" r="4" stroke="#c8f020" stroke-width="2"/>
+        <line x1="24" y1="14" x2="14" y2="42" stroke="#c8f020" stroke-width="2" stroke-linecap="round"/>
+        <line x1="24" y1="14" x2="34" y2="42" stroke="#c8f020" stroke-width="2" stroke-linecap="round"/>
+        <line x1="17" y1="30" x2="31" y2="30" stroke="#c8f020" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="14" cy="42" r="2" fill="#c8f020"/>
+        <circle cx="34" cy="42" r="2" fill="#c8f020"/>
+      </svg>
+      <div class="mascot-text">
+        <strong>ajudaeu // compasso</strong>
+        Construindo estratégia sobre base sólida — medindo cada passo antes de avançar.
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- DOR -->
+<section class="pain-section">
+  <div class="section-inner">
+    <div class="section-label">O problema real</div>
+    <h2 style="color:var(--paper)">Ninguém foi treinado<br>pra entender você.</h2>
+    <div class="pain-quote">
+      "A agência me mandou um relatório de 30 páginas cheio de gráfico e eu ainda não sabia o que fazer na segunda-feira."
+    </div>
+    <div class="pain-grid">
+      <div class="pain-card reveal">
+        <div class="pain-card-num">ERR_01</div>
+        <h3>Preços feitos para grandes empresas</h3>
+        <p>Pacotes de R$3.000–R$5.000/mês, contrato de 12 meses. Para quem tem um salão, clínica ou loja pequena, isso é simplesmente inviável.</p>
+      </div>
+      <div class="pain-card reveal">
+        <div class="pain-card-num">ERR_02</div>
+        <h3>Ninguém entende como é o seu dia</h3>
+        <p>Você não tem equipe, departamento ou assistente. É o dono, o vendedor, o caixa e o entregador. O consultor que nunca viveu isso não te ajuda de verdade.</p>
+      </div>
+      <div class="pain-card reveal">
+        <div class="pain-card-num">ERR_03</div>
+        <h3>Estratégia que você não consegue executar</h3>
+        <p>Plano lindo que exige ferramentas caras, equipe de 5 pessoas e 40h por semana. Você fecha o computador e não faz nada — porque não tem como.</p>
+      </div>
+      <div class="pain-card reveal">
+        <div class="pain-card-num">ERR_04</div>
+        <h3>Sumiço depois de fechar contrato</h3>
+        <p>Na reunião de venda todo mundo é atencioso. Depois, você vira mais um cliente numa fila. Demora dias pra responder, manda o estagiário.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIAL -->
+<section>
+  <div class="section-inner">
+    <div class="diff-layout">
+      <div>
+        <div class="section-label">Por que sou diferente</div>
+        <h2>Eu entendo o que é tocar um negócio pequeno.</h2>
+        <p class="lead">Não sou agência. Sou um profissional com 9 anos de experiência que escolheu trabalhar com quem mais precisa de resultado.</p>
+        <div class="diff-list">
+          <div class="diff-item reveal">
+            <span class="diff-num">01.</span>
+            <div>
+              <strong>Falo na sua língua, não em jargão</strong>
+              <span>Nada de relatório de 30 páginas. Você vai entender o que está sendo feito e por quê — em português claro.</span>
+            </div>
+          </div>
+          <div class="diff-item reveal">
+            <span class="diff-num">02.</span>
+            <div>
+              <strong>Estratégia que cabe no seu tempo</strong>
+              <span>Sei que você não tem 3h/dia pra marketing. Monto um plano com o que você tem, não com o que você deveria ter.</span>
+            </div>
+          </div>
+          <div class="diff-item reveal">
+            <span class="diff-num">03.</span>
+            <div>
+              <strong>Sem contrato longo, sem fidelidade forçada</strong>
+              <span>Se não estiver funcionando, pode sair. Meu interesse é que você tenha resultado.</span>
+            </div>
+          </div>
+          <div class="diff-item reveal">
+            <span class="diff-num">04.</span>
+            <div>
+              <strong>Atendimento direto, sem intermediário</strong>
+              <span>Você fala comigo — não com equipe, não com assistente. Com quem vai de fato trabalhar.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="diagram-box reveal">
+        <div class="diagram-header">
+          <span>diagnóstico // métricas reais</span>
+          <div class="diagram-header-dots">
+            <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+          </div>
+        </div>
+        <div class="diagram-body">
+          <div class="diagram-row">
+            <span class="diagram-key">ROI campanhas</span>
+            <div class="diagram-track">
+              <div class="diagram-fill" style="width:80%;background:var(--neon);">
+                <span>8× retorno</span>
+              </div>
+            </div>
+          </div>
+          <div class="diagram-row">
+            <span class="diagram-key">Redução CPM</span>
+            <div class="diagram-track">
+              <div class="diagram-fill" style="width:25%;background:var(--rust);">
+                <span>-25%</span>
+              </div>
+            </div>
+          </div>
+          <div class="diagram-row">
+            <span class="diagram-key">Receita recuperada</span>
+            <div class="diagram-track">
+              <div class="diagram-fill" style="width:95%;background:var(--ink);">
+                <span style="color:var(--paper)">R$200K</span>
+              </div>
+            </div>
+          </div>
+          <div class="diagram-row">
+            <span class="diagram-key">Clientes recorr.</span>
+            <div class="diagram-track">
+              <div class="diagram-fill" style="width:70%;background:var(--neon);">
+                <span>9.000+</span>
+              </div>
+            </div>
+          </div>
+          <div class="diagram-row">
+            <span class="diagram-key">Vendas em lançam.</span>
+            <div class="diagram-track">
+              <div class="diagram-fill" style="width:20%;background:var(--rust);">
+                <span>+20%</span>
+              </div>
+            </div>
+          </div>
+          <div class="diagram-row">
+            <span class="diagram-key">Anos de mercado</span>
+            <div class="diagram-track">
+              <div class="diagram-fill" style="width:90%;background:var(--ink);">
+                <span style="color:var(--paper)">9 anos</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section id="servicos" class="services-section">
+  <div class="section-inner">
+    <div class="section-label">Serviços & preços</div>
+    <h2>Só o que você<br>precisa agora.</h2>
+    <p class="lead">Sem pacote fechado. Sem pagar por coisas que não precisa. Só o que vai gerar resultado pro seu momento.</p>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-top">
+          <span class="service-code">SRV_01</span>
+          <div class="service-price">R$150<small>/ sessão</small></div>
+        </div>
+        <h3>Consultoria Diagnóstico</h3>
+        <p>1h focada em um problema específico. Você sai com plano de ação claro pra aplicar sozinho.</p>
+        <div class="service-tags">
+          <span class="stag">análise</span><span class="stag">plano de ação</span><span class="stag">gravação inclusa</span>
+        </div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-top">
+          <span class="service-code">SRV_02</span>
+          <div class="service-price">R$350<small>/ mês</small></div>
+        </div>
+        <h3>Gestão de Redes Sociais</h3>
+        <p>Conteúdo que atrai cliente de verdade, não só curtida. Você foca no que sabe fazer.</p>
+        <div class="service-tags">
+          <span class="stag">planejamento</span><span class="stag">copy</span><span class="stag">relatório</span>
+        </div>
+      </div>
+      <div class="service-card featured reveal">
+        <div class="service-top">
+          <span class="service-code" style="color:var(--neon)">SRV_03 ★</span>
+          <div class="service-price" style="color:var(--neon)">R$500<small style="color:rgba(240,234,214,0.5)">/ mês</small></div>
+        </div>
+        <h3>Tráfego Pago</h3>
+        <p>Anúncios no Meta e Google que trazem cliente — sem desperdiçar o pouco que você tem pra investir.</p>
+        <div class="service-tags">
+          <span class="stag">meta ads</span><span class="stag">google ads</span><span class="stag">copy</span><span class="stag">ROAS</span>
+        </div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-top">
+          <span class="service-code">SRV_04</span>
+          <div class="service-price">R$400<small>/ mês</small></div>
+        </div>
+        <h3>CRM & Retenção</h3>
+        <p>Paro sua base de clientes de escapar pelo ralo. Automações de follow-up e reativação.</p>
+        <div class="service-tags">
+          <span class="stag">crm</span><span class="stag">whatsapp</span><span class="stag">automação</span>
+        </div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-top">
+          <span class="service-code">SRV_05</span>
+          <div class="service-price">R$800<small>/ mês</small></div>
+        </div>
+        <h3>Plano Completo MEI</h3>
+        <p>Redes + tráfego + CRM — sem precisar contratar 3 pessoas diferentes.</p>
+        <div class="service-tags">
+          <span class="stag">360°</span><span class="stag">prioritário</span><span class="stag">reunião mensal</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUEM É -->
+<section class="who-section">
+  <div class="section-inner">
+    <div class="who-layout">
+      <div class="who-photo-frame reveal">
+        <img src="https://i.postimg.cc/5yq4jMRG/Gemini-Generated-Image.png" alt="Dante Lourenço" id="dante-photo"
+             style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block;"
+             onerror="this.style.display='none';document.getElementById('photo-fallback').style.display='flex'">
+        <div id="photo-fallback" style="position:absolute;inset:0;background:var(--neon);display:none;align-items:center;justify-content:center;">
+          <span style="font-family:var(--serif);font-weight:900;font-size:6rem;color:rgba(26,18,6,0.2)">DL</span>
+        </div>
+        <div class="who-photo-overlay">
+          <div class="who-name">Dante Lourenço</div>
+          <div class="who-role">Idealizador do projeto para ajudar você!</div>
+          <div class="who-traits">
+            <span class="who-trait">Apaixonado por tecnologia</span>
+            <span class="who-trait">Foco em ajudar negócios</span>
+            <span class="who-trait">Pai de 2 gatinhas estagiárias 🐱🧡</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-label">Quem está por trás</div>
+        <h2 style="color:var(--paper)">Um profissional que já esteve no seu lugar.</h2>
+        <p class="who-bio">
+          Com <strong>9 anos de experiência</strong> em marketing digital, passei por agências, grandes empresas e projetos pra negócios de todos os tamanhos. Aprendi que o microempreendedor sempre foi deixado de lado — com preços inacessíveis e estratégias que não cabem na rotina.<br><br>
+          Por isso criei o <strong>ajudaeu</strong>: pra ser o profissional de marketing que você precisava, mas nunca conseguia pagar. Direto, honesto e focado no seu resultado.
+        </p>
+        <div class="skills-label">// habilidades & especialidades</div>
+        <div class="skills-cloud">
+          <span class="skill-tag">CRM</span>
+          <span class="skill-tag">Tráfego Pago</span>
+          <span class="skill-tag">Redes Sociais</span>
+          <span class="skill-tag">Copywriting</span>
+          <span class="skill-tag">Meta Ads</span>
+          <span class="skill-tag">Google Ads</span>
+          <span class="skill-tag">HubSpot</span>
+          <span class="skill-tag">RD Station</span>
+          <span class="skill-tag">Pipedrive</span>
+          <span class="skill-tag">Kommo</span>
+          <span class="skill-tag">Active Campaign</span>
+          <span class="skill-tag">Automação</span>
+          <span class="skill-tag">Customer Marketing</span>
+          <span class="skill-tag">Segmentação de Base</span>
+          <span class="skill-tag">Funil de Vendas</span>
+          <span class="skill-tag">Remarketing</span>
+          <span class="skill-tag">Lookalike</span>
+          <span class="skill-tag">Analytics & KPIs</span>
+          <span class="skill-tag">Onboarding</span>
+          <span class="skill-tag">Retenção</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUEM -->
+<section>
+  <div class="section-inner">
+    <div class="section-label">Para quem é</div>
+    <h2>Você se encaixa aqui se…</h2>
+    <p class="lead">Atendo quem toca negócio com as próprias mãos e precisa de resultado com o orçamento que tem.</p>
+    <div class="for-who-grid">
+      <div class="for-who-card reveal">
+        <span class="for-who-icon">✂️</span>
+        <div class="for-who-title">Salão / Barbearia</div>
+        <div class="for-who-desc">Quer encher a agenda sem depender só de indicação</div>
+      </div>
+      <div class="for-who-card reveal">
+        <span class="for-who-icon">🍕</span>
+        <div class="for-who-title">Delivery / Restaurante</div>
+        <div class="for-who-desc">Quer mais pedidos e clientes que voltam sempre</div>
+      </div>
+      <div class="for-who-card reveal">
+        <span class="for-who-icon">🏋️</span>
+        <div class="for-who-title">Personal / Nutrição</div>
+        <div class="for-who-desc">Quer lotar as vagas de consultoria</div>
+      </div>
+      <div class="for-who-card reveal">
+        <span class="for-who-icon">⚖️</span>
+        <div class="for-who-title">Advogado / Contador</div>
+        <div class="for-who-desc">Quer captar clientes online com seriedade</div>
+      </div>
+      <div class="for-who-card reveal">
+        <span class="for-who-icon">🏗️</span>
+        <div class="for-who-title">Construção / Reforma</div>
+        <div class="for-who-desc">Quer aparecer pra quem busca serviço na sua cidade</div>
+      </div>
+      <div class="for-who-card reveal">
+        <span class="for-who-icon">🛍️</span>
+        <div class="for-who-title">Loja / Comércio</div>
+        <div class="for-who-desc">Quer competir com as grandes sem o orçamento delas</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section class="how-section">
+  <div class="section-inner">
+    <div class="section-label">O processo</div>
+    <h2>Simples do começo ao resultado.</h2>
+    <p class="lead">Sem burocracia, sem reunião de 2h. Direto ao ponto.</p>
+    <div class="how-grid">
+      <div class="how-step reveal">
+        <h3>Você me conta o problema</h3>
+        <p>Manda uma mensagem com seu maior desafio hoje. Sem formulário longo, sem reunião prévia.</p>
+      </div>
+      <div class="how-step reveal">
+        <h3>Eu entendo seu negócio</h3>
+        <p>Analiso sua situação, cliente, concorrência local e o que você pode executar com o tempo e dinheiro que tem.</p>
+      </div>
+      <div class="how-step reveal">
+        <h3>Plano que você consegue aplicar</h3>
+        <p>Nada de plano de 50 páginas. Um caminho claro, priorizado, que cabe na sua rotina.</p>
+      </div>
+      <div class="how-step reveal">
+        <h3>Executo com você ou por você</h3>
+        <p>Você escolhe: te ensino a fazer, faço junto, ou assumo completamente. Sem julgamento.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section-label" style="justify-content:center;color:var(--ink);">Sem risco</div>
+  <h2>Seu negócio merece marketing profissional sem pagar caro por isso.</h2>
+  <p>Primeira conversa é gratuita. Em 30 minutos já identifico o que está travando seu crescimento.</p>
+  <a href="https://wa.me/5511947418359?text=Oie%2C%20preciso%20de%20ajuda!" target="_blank" class="btn-primary" style="font-size:0.9rem;padding:1.1rem 2.5rem;display:inline-block;">Quero minha conversa gratuita →</a>
+  <div class="cta-note">// atendimento limitado por mês para garantir qualidade a cada cliente</div>
+</section>
+
+<!-- FORM -->
+<section id="contato" class="form-section">
+  <div class="section-inner">
+    <div class="section-label">Contato</div>
+    <h2 style="color:var(--paper);margin-bottom:2rem;">Me conta sobre<br>seu negócio.</h2>
+    <div class="form-wrap">
+      <p>Respondo em até 24h. Sem pitch de venda — só uma conversa honesta sobre o que faz sentido pra você.</p>
+      <form action="https://formsubmit.co/dantslourenco@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="Novo lead ajudaeu">
+        <input type="hidden" name="_captcha" value="false">
+        <div class="form-group">
+          <label for="nome">Seu nome</label>
+          <input type="text" id="nome" name="nome" placeholder="Como você se chama?" required>
+        </div>
+        <div class="form-group">
+          <label for="negocio">Seu negócio</label>
+          <input type="text" id="negocio" name="negocio" placeholder="Ex: Salão de beleza, delivery..." required>
+        </div>
+        <div class="form-group">
+          <label for="desafio">Seu maior problema hoje</label>
+          <select id="desafio" name="desafio" required>
+            <option value="" disabled selected>Escolha o que mais te trava</option>
+            <option>Não consigo atrair clientes novos</option>
+            <option>Gasto com anúncio e não vejo retorno</option>
+            <option>Clientes não voltam a comprar</option>
+            <option>Não tenho tempo pra cuidar do marketing</option>
+            <option>Não sei por onde começar</option>
+            <option>Estou perdendo para a concorrência</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="orcamento">Orçamento mensal disponível</label>
+          <select id="orcamento" name="orcamento" required>
+            <option value="" disabled selected>O que consigo investir por mês</option>
+            <option>Até R$200</option>
+            <option>Entre R$200 e R$500</option>
+            <option>Entre R$500 e R$1.000</option>
+            <option>Mais de R$1.000</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="whatsapp">WhatsApp</label>
+          <input type="tel" id="whatsapp" name="whatsapp" placeholder="(11) 99999-9999" required>
+        </div>
+        <button type="button" onclick="window.open('https://wa.me/5511947418359?text=Oie%2C%20preciso%20de%20ajuda!','_blank')" class="form-submit">Quero minha conversa gratuita →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 ajudaeu · seu melhor funcionário</span>
+  <a href="mailto:dantslourenco@gmail.com">dantslourenco@gmail.com</a>
+</footer>
+
+<script>
+  const img = document.getElementById('dante-photo');
+  const fb = document.getElementById('photo-fallback');
+  if(img){
+    img.onload = () => { if(fb) fb.style.display='none'; };
+    img.onerror = () => { img.style.display='none'; if(fb){ fb.style.display='flex'; } };
+  }
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(
+    entries => entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } }),
+    { threshold: 0.08, rootMargin: '0px 0px -30px 0px' }
+  );
+  reveals.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
